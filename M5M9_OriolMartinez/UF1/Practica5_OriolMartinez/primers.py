@@ -65,6 +65,3 @@ if __name__ == '__main__':
     """
     l = llista_primers(int(sys.argv[1]))
     print l.llista
-
-
-    ".......................222"
