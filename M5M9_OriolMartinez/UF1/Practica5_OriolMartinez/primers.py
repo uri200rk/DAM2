@@ -6,6 +6,16 @@ Modul per printar tants números primàris com s'ha indicat
 import sys
 
 class llista_primers:
+
+    """
+    >>> llista_primers(3).llista
+    [2, 3, 5]
+    >>> llista_primers(4).llista
+    [2, 3, 5, 7]
+    >>> llista_primers(5).llista
+    [2, 3, 5, 7, 11]
+    """
+
     def __init__(self, n):
         self.n = n
         self.llista = []
@@ -66,10 +76,5 @@ class llista_primers:
 
 if __name__ == '__main__':
 
-    
-    l = llista_primers(int(sys.argv[1]))
-
-    
-    #obliguem a l'usuari a introduir un paràmetre
-    
-    print l.llista
+    import doctest
+    doctest.testmod()
