@@ -15,8 +15,10 @@ def send_welcome(message):
     lugar = message.text.split()
     print (lugar[1])
     response = requests.get("https://www.eltiempo.es/"+lugar[1]+".html")
-    print(response.text)
-    temp = response.text[100:103]
+   findText = response.text.find("setTargeting(\'temp_c\'")
+    # en caso que se meta numero del dia number = response.text.find("23 Oct")
+    # caso en que se meta numero del dia temp = response.text[number+241:number+243]
+    print ("number",number)
     print temp
     webbrowser.open("https://www.eltiempo.es/"+lugar[1]+".html", new=2, autoraise=True)
 
