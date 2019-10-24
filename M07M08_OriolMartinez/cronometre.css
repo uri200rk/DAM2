@@ -1,0 +1,57 @@
+
+.imgCrono{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+.cajaNumeros {
+    width: 360px;
+    height: 360px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #636161;
+    position:absolute;
+    top: 23%;   
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+.cronometro{
+    width:200px;
+    height:100px;
+    top:50%;
+    left:50%;
+    position:absolute;
+    margin-top:-50px;
+    margin-left:-100px;
+    text-align:center;
+} 
+.boton{display:inline-block;width:32px;height:32px;position:relative;}
+#hms{
+    height:68px;
+    padding:5px 0;
+    font-size:50px;
+    color:#000;
+    font-family: alarm;  
+    position:absolute;
+    
+   
+ }
+    .start{
+        height: 50px;
+        width: 50px;
+        top: 30%;
+        }
+    .stop{
+        height: 50px;
+        width: 50px;
+        top: 30%;
+    }
+    .reiniciar{
+        height: 50px;
+        width: 50px;
+        top: 30%;
+    }
