@@ -1,0 +1,49 @@
+<?xml version = "1.0"?>
+
+<comanda idclient="aaaa" status = '0'>  
+
+   <article>
+
+      <codi>0001</codi>
+
+      <unitats>500</unitats>
+      
+      <unitatsServides>0</unitatsServides>
+      
+      <preuUnitari>150</preuUnitari>
+      
+      <status>0</status>      
+
+   </article>   
+
+   <article>
+
+      <codi>0002</codi>
+
+      <unitats>350</unitats>   
+      
+      <unitatsServides>0</unitatsServides>
+      
+      <preuUnitari>300.99</preuUnitari>
+      
+      <status>0</status>     
+
+   </article>   
+
+   <article>
+
+      <codi>0003</codi>
+
+      <unitats>100</unitats>
+      
+       <unitatsServides>0</unitatsServides>
+      
+      <preuUnitari>499.99</preuUnitari>
+      
+      <status>0</status>        
+
+   </article>
+
+</comanda>
+
+
