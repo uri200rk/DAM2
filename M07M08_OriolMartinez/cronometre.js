@@ -5,6 +5,7 @@ function init(){
     document.querySelector(".start").addEventListener("click",cronometrar);
     document.querySelector(".stop").addEventListener("click",parar);
     document.querySelector(".reiniciar").addEventListener("click",reiniciar);
+    document.querySelector("lap").addEventListener("click",lap);
     h = 0;
     m = 0;
     s = 0;
@@ -26,7 +27,8 @@ function escribir(){
     if (m<10){mAux="0"+m;}else{mAux=m;}
     if (h<10){hAux="0"+h;}else{hAux=h;}
 
-    document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
+    document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux;
+    tiempo =  hAux + ":" + mAux + ":" + sAux;
 }
 function parar(){
     clearInterval(id);
@@ -38,4 +40,8 @@ function reiniciar(){
     document.getElementById("hms").innerHTML="00:00:00";
     h=0;m=0;s=0;
     document.querySelector(".start").addEventListener("click",cronometrar);
+}
+function lap(){
+
+    document.getElementById(tiempo);
 }

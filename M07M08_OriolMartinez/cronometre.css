@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    margin-top: 10%;
     
 }
 .cajaNumeros {
@@ -29,29 +30,45 @@
     margin-left:-100px;
     text-align:center;
 } 
-.boton{display:inline-block;width:32px;height:32px;position:relative;}
+
+
+
+.boton{display:inline-block;width:32px;height:32px;position:relative;margin:center}
 #hms{
     height:68px;
     padding:5px 0;
     font-size:50px;
     color:#000;
     font-family: alarm;  
-    position:absolute;
+    position:relative;
+    left: 18%;
+    top: 30%;
+
     
    
  }
     .start{
         height: 50px;
         width: 50px;
-        top: 30%;
+        top: 50%;
+        left: 27%;
         }
     .stop{
         height: 50px;
         width: 50px;
-        top: 30%;
+        top: 50%;
+        left: 27%;
     }
     .reiniciar{
         height: 50px;
         width: 50px;
-        top: 30%;
+        top: 50%;
+        left:27%;
+    }
+
+    .lop{
+        height: 50px;
+        width: 50px;
+        top: 50%;
+        left:27%;
     }

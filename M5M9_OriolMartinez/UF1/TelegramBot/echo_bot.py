@@ -15,21 +15,18 @@ def send_welcome(message):
     lugar = message.text.split()
     print (lugar[1])
     response = requests.get("https://www.eltiempo.es/"+lugar[1]+".html")
-    #findText = response.text.find("setTargeting(\'temp_c\'")
-    # en caso que se meta numero del dia number = response.text.find("23 Oct")
-    # caso en que se meta numero del dia temp = response.text[number+241:number+243]
+    findText = response.text.find("setTargeting(\'temp_c\'")
+    # en caso que se meta numero del dia, dara el tiempo medio de ese dia
+    number = response.text.find(lugar[2]+" Oct")
+    if lugar[2] >=10:
+        temp = response.text[number+241:number+243]
+    else:
+        temp = response.text[number+240:number+243]   
+    print ("parte2",lugar[2])
     print ("number",number)
-    print temp
-    webbrowser.open("https://www.eltiempo.es/"+lugar[1]+".html", new=2, autoraise=True)
-
-@bot.message_handler(commands=['neifi'])
-def send_welcome(message):
-    #bot.reply_to(message, )
-
-    lugar = message.text.split()
-    
-
-    webbrowser.open("https://www.netflix.com/es/", new=2, autoraise=True)    
+    print ("Tiempo",temp)
+    #webbrowser.open("https://www.eltiempo.es/"+lugar[1]+".html", new=2, autoraise=True)
+    bot.reply_to(message,"La temperatura en " +lugar[1]+" el dia "+lugar[2]+" es de: " +temp)
     
 bot.polling() 
 
