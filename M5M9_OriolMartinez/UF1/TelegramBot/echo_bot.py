@@ -15,15 +15,15 @@ def send_welcome(message):
 @bot.message_handler(commands=['setHome'])
 def send_welcome(message):
     home = message.text.split()
-    
-    print(message.chat.id)
+
     idPers = str(message.chat.id)
     file = open("setHome.txt","a")
     file.write("\n"+idPers+","+home[1])
     file.close()
-    file = open("setHome.txt","r")
     
-    print("lines"+file.readline())
+    file = open("setHome.txt","r")
+    separacion = file.read().split(',')
+    print separacion[2]
 @bot.message_handler(commands=['tiempo'])
 def send_welcome(message):
     #bot.reply_to(message, )
