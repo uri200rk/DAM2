@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-holaa
+
 import math
 
 import pygame
@@ -161,7 +161,7 @@ class Bullet(Entity):
         self.orig_image = pygame.image.load('assets/bullet.png')
         super(Bullet, self).__init__(self.orig_image, position)
         self.motion = Vector.from_degrees(direction,magnitude)
-
+        self.duration = 100
     def update(self):
         self.duration -= 1
         if self.duration <=0:
@@ -230,7 +230,7 @@ def main():
     while running:
         time += 1
         events = pygame.event.get()
-        if (time == 70 and counter < 30):
+        if (time == 10 and len(world.sprites) < 31):
             asteroid = Asteroid((random.randint(0,800),random.randint(0,600)))
             world.sprites.add(asteroid)
             counter += 1
