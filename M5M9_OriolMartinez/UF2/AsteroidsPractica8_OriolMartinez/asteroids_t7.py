@@ -5,6 +5,9 @@ import math
 import pygame
  
 import random
+
+from threading import Thread
+
 from pygame.locals import *
 
 
@@ -147,7 +150,7 @@ class Asteroid(Entity):
         x = random.randint(-10,10)
         y = random.randint(-10,10)
         self.motion = Vector(x,y)
-        self.duration = 100
+        self.duration = 10000
 
     def update(self):
         self.duration -= 1
@@ -203,7 +206,27 @@ class Player(Entity):
         self.image = pygame.transform.rotate(self.orig_image, degrees)
         self.rect = self.image.get_rect()
         self.rect.center = current
+        
+#proceso
+player = Player((400, 300))
+world = World((800, 600), player)
+world.tiempo = 0
+world.running = True
+clock = pygame.time.Clock()
 
+def update_d():
+    while world.running:
+        world.tiempo = world.tiempo + 1
+        
+        if (world.tiempo == 10 and len(world.sprites) < 31):
+            asteroid = Asteroid((random.randint(0,800),random.randint(0,600)))
+            world.sprites.add(asteroid)
+           
+            world.tiempo = 0
+     
+        world.update()
+        clock.tick(40)
+    
 
 def main():
     """ runs our application """
@@ -215,39 +238,35 @@ def main():
     pygame.display.set_caption("Asteroids 0.2")
 
     # store our game state
-    player = Player((400, 300))
-    world = World((800, 600), player)
+    
+    
     world.pew = pygame.mixer.Sound('assets/pew.wav')
    
-    
+   
 
     # use the clock to throttle the fps to something reasonable
-    clock = pygame.time.Clock()
-    counter = 0
-    time = 0
+   
+    
+    
     # main loop
-    running = True
-    while running:
-        time += 1
+    proceso = Thread(target = update_d)
+    proceso.start()
+
+    while world.running:
         events = pygame.event.get()
-        if (time == 10 and len(world.sprites) < 31):
-            asteroid = Asteroid((random.randint(0,800),random.randint(0,600)))
-            world.sprites.add(asteroid)
-            counter += 1
-            time = 0
         # handle our events
         for event in events:
             if event.type == QUIT:
-                running = False
+                world.running = False
                 break
 
             world.handle_event(event)
 
-        world.update()
         world.render()
         pygame.display.flip()
         clock.tick(40)
-
+   
 
 if __name__ == "__main__":
     main()
+
