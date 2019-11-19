@@ -19,11 +19,11 @@ def send_welcome(message):
     idPers = str(message.chat.id)
     file = open("setHome.txt","a")
     file.write("\n"+idPers+","+home[1])
-    file.close()
+    file.close() 
     
     file = open("setHome.txt","r")
     separacion = file.read().split(',')
-    print separacion[2]
+    
 @bot.message_handler(commands=['tiempo'])
 def send_welcome(message):
     #bot.reply_to(message, )
