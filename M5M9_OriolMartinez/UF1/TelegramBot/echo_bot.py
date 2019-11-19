@@ -23,7 +23,11 @@ def send_welcome(message):
     
     file = open("setHome.txt","r")
     separacion = file.read().split(',')
+<<<<<<< HEAD
     
+=======
+   
+>>>>>>> 2464d0fce4ddb5959005ae5fbdede4bdba3080b6
 @bot.message_handler(commands=['tiempo'])
 def send_welcome(message):
     #bot.reply_to(message, )
