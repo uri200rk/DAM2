@@ -84,13 +84,7 @@ class World(object):
             self.player.forward = True
         if event.key == pygame.K_DOWN:
             self.player.backward = True
-        if event.key == pygame.K_SPACE:
-            
-            direction = self.player.facing.to_degrees()[0]
-            magnitude = self.player.motion.magnitude()-10
-            #bullet = Bullet(self.player.rect.center,(self.player.facing.to_degrees()[0]) + 180,10)
-            bullet = Bullet((Vector(*self.player.rect.center)-self.player.facing*2).to_position(),direction,magnitude)
-            world.sprites.add(bullet)
+        
 
 
 
@@ -105,6 +99,14 @@ class World(object):
             self.player.forward = False
         if event.key == pygame.K_DOWN:
             self.player.backward = False
+
+        if event.key == pygame.K_SPACE:
+            
+            direction = self.player.facing.to_degrees()[0]
+            magnitude = self.player.motion.magnitude()-10
+            #bullet = Bullet(self.player.rect.center,(self.player.facing.to_degrees()[0]) + 180,10)
+            bullet = Bullet((Vector(*self.player.rect.center)-self.player.facing*2).to_position(),direction,magnitude)
+            world.sprites.add(bullet)
             
 
 class Vector(object):
