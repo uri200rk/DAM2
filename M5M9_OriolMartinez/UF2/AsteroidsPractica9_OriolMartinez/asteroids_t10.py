@@ -10,6 +10,8 @@ from datetime import datetime
 from multiprocessing import Process, Queue
 from threading import Thread
 
+
+
 class World(object):
     """ contains all of our game state """
 
@@ -33,8 +35,8 @@ class World(object):
         # setup our event handlers
         self.event_handlers = {
             VIDEORESIZE: self.handle_resize,
-            #KEYDOWN: self.handle_keydown,
-            #KEYUP: self.handle_keyup
+            KEYDOWN: self.handle_keydown,
+            KEYUP: self.handle_keyup
         }
 
     def update(self):
@@ -71,6 +73,19 @@ class World(object):
         self.size = event.dict['size']
         self.surface = pygame.display.set_mode(self.size, self.RENDER_OPTIONS)
 
+    
+    def handle_keydown(self, event):
+        keys = pygame.key.get_pressed()
+        if even.key == pygame.K_LEFT:
+            self.forward = True
+
+
+
+
+    def handle_keyup(self,event):
+
+        self.backward = True
+            
 
 class Vector(object):
 

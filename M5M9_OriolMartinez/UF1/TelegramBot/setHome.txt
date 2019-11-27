@@ -1,12 +1,5 @@
-
 701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
-701146255,manresa
+701146255,barcelona
+312642786,Groenlandia
+312642786,Valencia
+701146255,sevilla
