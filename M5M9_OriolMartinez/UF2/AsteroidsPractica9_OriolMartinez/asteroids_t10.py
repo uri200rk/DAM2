@@ -97,7 +97,7 @@ class World(object):
             self.player.turn_right = False
         if event.key == pygame.K_UP:
             self.player.forward = False
-        if event.key == pygame.K_DOWN:
+        if event.key == pygame.K_DOWN:  
             self.player.backward = False
 
         if event.key == pygame.K_SPACE:
