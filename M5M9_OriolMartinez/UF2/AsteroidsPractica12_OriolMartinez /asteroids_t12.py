@@ -8,17 +8,20 @@ from pygame.locals import *
 import random, time
 from datetime import datetime
 from multiprocessing import Process, Queue
-from threading import Thread
+from threading import Thread , Semaphore
 
 
+
+s = Semaphore(1)
 
 class World(object):
     """ contains all of our game state """
-
+   
     RENDER_OPTIONS = HWSURFACE | DOUBLEBUF | RESIZABLE
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
-
+    RED = (255,0,0)
+    
     def __init__(self, size, player):
         # setting up the screen
         self.size = size
@@ -245,8 +248,20 @@ class Asteroid(Entity):
         if self.duration <= 0:
             self.kill()
 
+def update_collisions():
+    s.acquire()
+    print("entro")
+    
+    while world.running:
+        colNau()
+        colTrets()
+        
+    clock.tick(40)
+    s.release()
+
 def update_s():
     #print "entra"
+    s.acquire()
     i = 0
     while world.running:
         if i == 10 and len([x for x in world.sprites if isinstance(x, Asteroid)]) < 30:
@@ -254,12 +269,40 @@ def update_s():
             world.sprites.add(asteroid)
             i = 0
         i += 1
+        #colNau()
+        #colTrets()
         world.update()
         world.render()
         pygame.display.flip()
         clock.tick(40)
     #print 'acaba'
+    s.release()
     return 0
+
+def colNau():
+    
+    for i in [x for x in world.sprites if isinstance(x, Asteroid)]:
+        if abs(world.player.rect.center[0]-i.rect.center[0]) <20:
+            if abs(world.player.rect.center[1]-i.rect.center[1]) <20:
+                print("tocando")
+                world.running = False
+                world.surface.fill(world.RED)
+                i.duration = 0
+                world.render()
+                pygame.display.flip()
+                time.sleep(5)
+            
+def colTrets():
+    for i in [x for x in world.sprites if isinstance(x, Asteroid)]:
+        for j in [x for x in world.sprites if isinstance(x, Bullet)]:
+            if abs(i.rect.center[0] - j.rect.center[0]) <15:
+                if abs(i.rect.center[1] - j.rect.center[1]) <15:
+                    print("tocando")
+                    i.duration = 0
+                    j.duration = 0
+                    
+                
+                
 
 # setup pygame
 pygame.init()
@@ -280,7 +323,10 @@ def main():
 
     # main loop
     supdate = Thread(target=update_s)
+    processCollision = Thread(target=update_collisions)
     supdate.start()
+    processCollision.start()
+
     while world.running:
 
         events = pygame.event.get()
