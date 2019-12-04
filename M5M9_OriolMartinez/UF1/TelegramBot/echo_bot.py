@@ -4,17 +4,22 @@ import webbrowser
 import requests
 import os
 import sys
+from datetime import datetime
+from threading import Semaphore
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 bot = telebot.TeleBot("850906969:AAEggI372vsBtM84ozbxRIKKBHJGEvWqRuQ")
+s = Semaphore(1)
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-	bot.reply_to(message, "Soy tu hombre del tiempo, preguntame! Como funciono? Introduce el comando /tiempo i seguidamente el stitio")
+    bot.reply_to(message, "Soy tu hombre del tiempo, preguntame! Como funciono? Introduce el comando /tiempo i seguidamente el stitio")
 
 @bot.message_handler(commands=['setHome'])
 def send_welcome(message):
+
+    s.acquire()
 
     home = message.text.split()
     
@@ -27,12 +32,22 @@ def send_welcome(message):
         file.write(idPers+","+home[1])
     else:
         file.write("\n"+idPers+","+home[1])
+    file.close()
     
-
-
+    bot.send_message(message.chat.id,"Casa establecido en : "+home[1])
+    s.release()
 
 @bot.message_handler(commands=['tiempo'])
 def send_welcome(message):
+    #obtener mes actual
+    s.acquire()
+    now = datetime.now()
+    mes = int(format(now.month))
+    llistaMesos = ["","Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
+    mesAbre = llistaMesos[mes]
+    print(mesAbre)
+
+
     idPers = str(message.chat.id)
     temp = 0
     temp2 = 0
@@ -53,6 +68,7 @@ def send_welcome(message):
         
         lugar.append(str(puebloUsuario))
     print (lugar[1])
+    print("puebloUsuario: ",puebloUsuario)
 
     response = requests.get("https://www.eltiempo.es/"+lugar[1]+".html")    #descargamos la pagina eltiempo con el pueblo introducido/correpondiente
 
@@ -65,13 +81,13 @@ def send_welcome(message):
     
     if len(lugar) ==3:  #CASO 2: INTRODUCION DE PUEBLO + FECHA
         if int(lugar[2]) >=10: #por si el numero introducido es mas grande que 10(para encontrar la posicion exacta de la temp)
-            number = response.text.find(lugar[2]+" Nov") #busca de palabra clave para obtener numero de la posicion
+            number = response.text.find(lugar[2]+" "+mesAbre) #busca de palabra clave para obtener numero de la posicion
             temp = response.text[number+241:number+243] #guardamos en "temp" la temperatura
-            bot.reply_to(message,"La temperatura en " +lugar[1]+" el dia "+lugar[2]+" es de: " +temp)   #MOSTRAMOS TIEMPO CASO 2(si es mas grande que 10)
+            bot.send_message(message.chat.id,"La temperatura máxima en " +lugar[1]+" el dia "+lugar[2]+" es de: " +temp+"°")   #MOSTRAMOS TIEMPO CASO 2(si es mas grande que 10)
         else:
-            number = response.text.find(lugar[2]+" Nov")
-            temp = response.text[number+240:number+243]
-            bot.reply_to(message,"La temperatura en " +lugar[1]+" el dia "+lugar[2]+" es de: " +temp)   #MOSTRAMOS TIEMPO CASO 2(si es mas pequeño que 10)
+            number = response.text.find(lugar[2]+" "+mesAbre)
+            temp = response.text[number+240:number+242]
+            bot.send_message(message.chat.id,"La temperatura máxima en" +lugar[1]+" el dia "+lugar[2]+" es de: " +temp+"°")   #MOSTRAMOS TIEMPO CASO 2(si es mas pequeño que 10)
     else: #CASO DONDE SOLO SE INTRODUCE EL LUGAR O SE OBTIENE DEL FIXERO
         try:
             temp2 = response.text[findText+24:findText+26]
@@ -81,10 +97,10 @@ def send_welcome(message):
         except ValueError:  #caso que de error por si hay comillas porque es un numero mas pequeño que 10
             temp2 = response.text[findText+24:findText+25]
 
-        bot.reply_to(message,temp2) #MOSTRAMOS TIEMPO CASO 1
+        bot.send_message(message.chat.id,"El tiempo actual en "+lugar[1]+" es de "+temp2+"°") #MOSTRAMOS TIEMPO CASO 1
 
     print ("tiempo 2",temp2)
-  
+    s.release()
     
     
     
