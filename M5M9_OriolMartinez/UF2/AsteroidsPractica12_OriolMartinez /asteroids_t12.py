@@ -249,21 +249,25 @@ class Asteroid(Entity):
             self.kill()
 
 def update_collisions():
-    s.acquire()
+    
     print("entro")
     
     while world.running:
+        s.acquire()
         colNau()
         colTrets()
+        s.release()
+        clock.tick(40)
         
-    clock.tick(40)
-    s.release()
+    
+    
 
 def update_s():
-    #print "entra"
-    s.acquire()
+    #print ("entra")
+    
     i = 0
     while world.running:
+        s.acquire()
         if i == 10 and len([x for x in world.sprites if isinstance(x, Asteroid)]) < 30:
             asteroid = Asteroid((random.randint(0, 800), random.randint(0,600)))
             world.sprites.add(asteroid)
@@ -274,9 +278,10 @@ def update_s():
         world.update()
         world.render()
         pygame.display.flip()
+        s.release()
         clock.tick(40)
     #print 'acaba'
-    s.release()
+        
     return 0
 
 def colNau():
