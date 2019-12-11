@@ -6,8 +6,8 @@ import os
 import sys
 from datetime import datetime
 from threading import Semaphore
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 bot = telebot.TeleBot("850906969:AAEggI372vsBtM84ozbxRIKKBHJGEvWqRuQ")
 s = Semaphore(1)
@@ -28,13 +28,19 @@ def send_welcome(message):
     
     file = open("setHome.txt","a")
 
-    if os.stat("setHome.txt").st_size == 0:
-        file.write(idPers+","+home[1])
-    else:
-        file.write("\n"+idPers+","+home[1])
-    file.close()
+
+    try:
+        if os.stat("setHome.txt").st_size == 0:
+            file.write(idPers+","+home[1])
+        else:
+            file.write("\n"+idPers+","+home[1])
+        file.close()
+        
+        bot.send_message(message.chat.id,"Casa establecido en : "+home[1])
+    except:
+        bot.send_message(message.chat.id,"Introduce un lugar!")
+
     
-    bot.send_message(message.chat.id,"Casa establecido en : "+home[1])
     s.release()
 
 @bot.message_handler(commands=['tiempo'])
