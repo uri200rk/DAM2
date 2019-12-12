@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import telebot
 import webbrowser
 import requests
@@ -6,8 +6,8 @@ import os
 import sys
 from datetime import datetime
 from threading import Semaphore
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 bot = telebot.TeleBot("850906969:AAEggI372vsBtM84ozbxRIKKBHJGEvWqRuQ")
 s = Semaphore(1)
@@ -22,23 +22,25 @@ def send_welcome(message):
     s.acquire()
 
     home = message.text.split()
-    home = home.lower()
     
     idPers = str(message.chat.id)
 
     
     file = open("setHome.txt","a")
 
+
     try:
         if os.stat("setHome.txt").st_size == 0:
             file.write(idPers+","+home[1])
         else:
             file.write("\n"+idPers+","+home[1])
-            file.close()
+        file.close()
+        
         bot.send_message(message.chat.id,"Casa establecido en : "+home[1])
     except:
         bot.send_message(message.chat.id,"Introduce un lugar!")
 
+    
     s.release()
 
 @bot.message_handler(commands=['tiempo'])
@@ -56,7 +58,6 @@ def send_welcome(message):
     temp = 0
     temp2 = 0
     lugar = message.text.split()    #dividimos el texto introducido por el usuario
-    lugar = lugar.lower()
     puebloUsuario = 0
     if len(lugar)==1:   #CASO 1: NO INTRODUCE NINGUN PARAMETRO
         file = open('setHome.txt', 'r')
