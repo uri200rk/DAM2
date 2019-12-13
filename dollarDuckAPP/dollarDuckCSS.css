@@ -1,0 +1,8 @@
+.iconMenu{
+    background-color: black;
+}
+
+.hide-on-med-and-down li{
+    float: none !important;
+    display: inline !important;
+}
