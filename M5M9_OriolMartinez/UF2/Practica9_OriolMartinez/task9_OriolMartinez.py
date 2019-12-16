@@ -22,5 +22,5 @@ if __name__ == '__main__':
 
 #La quantitat de processos que podem executar alhora depen dels nuclis que té el nostre ordinador, per tant si fiquem més, quan tots els nuclis estiguin ocupats, el proxim process haurà d'esperar a que un quedi lliure
 #per tant si fiquem molts més processos dels que tenim, molts dels processos s'hauràn d'esperar i pot ser el motiu que l'ordinador pugui penjar-se.
-#Per tant surt a compte ficar un parell de processos més de nuclis que te l'ordinador, aixi sempre hi hauràn dos processos esperant per entrar, i serà més ràpid, ja que el timesleep dels processadors s'acceleraràn, amb dos processos de més es suficient, així no carreguem molte feina e l'ordinador.
+#Per tant surt a compte ficar un parell de processos més de nuclis que te l'ordinador, aixi sempre hi hauràn dos processos esperant per entrar, i serà més ràpid, ja que el timesleep dels processadors s'acceleraràn, amb dos processos de més es suficient, així no carreguem molta feina e l'ordinador.
 
