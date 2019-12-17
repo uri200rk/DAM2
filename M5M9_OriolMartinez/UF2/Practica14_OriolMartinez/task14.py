@@ -35,7 +35,6 @@ def substitueix(x, y, s):
         s.release()
         busca(y, s)
 
-
 def inici():
     f = open('fitxer.txt', 'w')
     for i in range(100):
@@ -43,7 +42,33 @@ def inici():
     f.close()
     #print open('fitxer.txt', 'ro').read()
 
+def fill(s, p):
+    
+    n1 = b.recv()
+    n2 = b.recv()
 
+    substitueix(n1, n2, s)
+ 
 if __name__ == '__main__' :
 
     inici()
+    s = Semaphore()
+    a, b = Pipe()
+
+    while True:
+
+        print("valor1: ")
+        x = raw_input()
+        print("valor 2")
+        y = raw_input()
+
+        if x == "q" or y == "q":
+            break
+
+        else:
+            a.send(x)
+            a.send(y)
+            process = Process(target=fill, args=(s,a))
+
+            process.start()
+            process.join()
