@@ -70,13 +70,12 @@ if __name__ == '__main__' :
         x = raw_input()
         print("valor 2")
         y = raw_input()
+        a.send(x)
+        a.send(y)
 
         if x == "q" or y == "q":
             break
-
-        else:
-            a.send(x)
-            a.send(y)
+  
         time.sleep(1)
 
             
