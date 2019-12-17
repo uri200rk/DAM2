@@ -43,17 +43,26 @@ def inici():
     #print open('fitxer.txt', 'ro').read()
 
 def fill(s, p):
-    
-    n1 = b.recv()
-    n2 = b.recv()
+    while True:
+        n1 = b.recv()
+        n2 = b.recv()
+        if n1 == "q" or n2 == "q":
+            break
+        else:
+            substitueix(n1, n2, s)
 
-    substitueix(n1, n2, s)
+    
  
 if __name__ == '__main__' :
 
     inici()
+    
     s = Semaphore()
     a, b = Pipe()
+
+    process = Process(target=fill, args=(s,a))
+    process.start()
+
 
     while True:
 
@@ -68,7 +77,7 @@ if __name__ == '__main__' :
         else:
             a.send(x)
             a.send(y)
-            process = Process(target=fill, args=(s,a))
+            
 
-            process.start()
-            process.join()
+            
+    process.join()
