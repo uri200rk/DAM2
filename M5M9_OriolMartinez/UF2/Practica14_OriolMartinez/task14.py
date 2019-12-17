@@ -66,7 +66,7 @@ if __name__ == '__main__' :
 
     while True:
 
-        print("valor1: ")
+        print("valor 1: ")
         x = raw_input()
         print("valor 2")
         y = raw_input()
@@ -77,7 +77,7 @@ if __name__ == '__main__' :
         else:
             a.send(x)
             a.send(y)
-            
+        time.sleep(1)
 
             
     process.join()
