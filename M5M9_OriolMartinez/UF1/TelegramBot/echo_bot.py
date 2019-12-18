@@ -6,8 +6,8 @@ import os
 import sys
 from datetime import datetime
 from threading import Semaphore
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 bot = telebot.TeleBot("850906969:AAEggI372vsBtM84ozbxRIKKBHJGEvWqRuQ")
 s = Semaphore(1)

@@ -45,8 +45,10 @@ def inici():
 def fill(s, p):
     while True:
         n1 = b.recv()
+        if n1 == "q":
+            break
         n2 = b.recv()
-        if n1 == "q" or n2 == "q":
+        if n2 == "q":
             break
         else:
             substitueix(n1, n2, s)
@@ -68,12 +70,13 @@ if __name__ == '__main__' :
 
         print("valor 1: ")
         x = raw_input()
+        a.send(x)
+        if x == "q":
+            break
         print("valor 2")
         y = raw_input()
-        a.send(x)
         a.send(y)
-
-        if x == "q" or y == "q":
+        if y == "q":
             break
   
         time.sleep(1)
