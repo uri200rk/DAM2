@@ -1,1 +1,3 @@
 701146255,barcelona
+701146255,Barcelona
+701146255,manresa
