@@ -10,4 +10,17 @@ $(document).ready(function(){
         
         console.log(JSON.stringify(dades));
     });
+
+
+    
+        $(".boton").click(function(){
+            $("#formulari").slideToggle();
+            
+           
+         
+        
+    
+
+
+
 });
