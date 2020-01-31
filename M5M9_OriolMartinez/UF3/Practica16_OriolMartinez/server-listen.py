@@ -4,7 +4,7 @@ import time
 import threading
 
 HOST = ''                 # Symbolic name meaning all available interfaces
-PORT = 50007              # Arbitrary non-privileged port
+PORT = 50009              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST,PORT))
 
@@ -15,28 +15,42 @@ s.listen(1)
 conn, addr = s.accept()
 
 
-def recibir(socket):
-    #recibir mensaje
-    data = socket.recv(1024)
-    print data
+def recibir(conexion):
+    while True:
 
-def enviar(socket,data):
-    #misatge a enviar
-    socket.sendall(data)
+        #recibir mensaje
+        data = conexion.recv(1024)
+
+        print data
+
+        if data == "bye":
+            conexion.sendall(data)
+
+            print "break"
+            break
+        
+        
+        
+
+def enviar(conexion):
+    while True:
+        #entramos parametro por teclado
+        data = raw_input()
+
+        #misatge a enviar
+        conexion.sendall(data)
+        if data == "bye":
+            break
+        
+        
 
 
-    
-
-while True:
-    t.start()
-    #entramos parametro por teclado
-    data = raw_input()
-    t2.start()
 
 t = threading.Thread(target=recibir, args=(conn,))
-t2 = threading.Thread(target=enviar, args=(conn, data))
+t2 = threading.Thread(target=enviar, args=(conn,))
+t2.deamon = True
+t.start()
+t2.start()
 
+t.join()
 s.close()
-
-
-
