@@ -4,13 +4,13 @@ import time
 import threading
 
 HOST = ''                 # Symbolic name meaning all available interfaces
-PORT = 50008              # Arbitrary non-privileged port
+PORT = 8013              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST,PORT))
 
 
 # marquem cuantes conexions esperem
-s.listen(1)
+s.listen(3)
 #acceptem la conexio
 conn, addr = s.accept()
 
