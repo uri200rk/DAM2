@@ -4,7 +4,7 @@ import time
 import threading
 
 HOST = ''                 # Symbolic name meaning all available interfaces
-PORT = 50009              # Arbitrary non-privileged port
+PORT = 50008              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST,PORT))
 
@@ -24,7 +24,7 @@ def recibir(conexion):
         print data
 
         if data == "bye":
-            conexion.sendall(data)
+            conexion.sendall("bye")
 
             print "break"
             break
@@ -48,9 +48,12 @@ def enviar(conexion):
 
 t = threading.Thread(target=recibir, args=(conn,))
 t2 = threading.Thread(target=enviar, args=(conn,))
-t2.deamon = True
+t2.daemon = True
 t.start()
 t2.start()
 
 t.join()
+print 'break2'
+
 s.close()
+print 'break39'
