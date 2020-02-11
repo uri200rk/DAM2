@@ -6,7 +6,7 @@ from ChatFns import *
 #---------------------------------------------------#
 WindowTitle = 'JChat v0.1 - Client'
 HOST = 'localhost'
-PORT = 8013
+PORT = 8022
 s = socket(AF_INET, SOCK_STREAM)
 
 
