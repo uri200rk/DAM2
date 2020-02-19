@@ -4,7 +4,7 @@ import time
 import threading
 
 HOST = ''                 # Symbolic name meaning all available interfaces
-PORT = 8003              # Arbitrary non-privileged port
+PORT = 8029              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST,PORT))
 
@@ -16,38 +16,53 @@ def acceptace(s):
     while True:
         #acceptem la conexio
         conn, addr = s.accept()
-        listaConex.append(conn)
+        
+
         t = threading.Thread(target=recibir, args=(conn, listaConex))
         t.start()
        
 
 
 def recibir(conexion, listaConex):
+    nombre = ""
     while True:
-        #recibir mensaje
-        data = conexion.recv(1024)
-        print data
-        if data == "bye\n":
-            print "entro a bye"
-            conexion.close()
-            listaConex.remove(conexion)
-            print listaConex
-            break
+        if nombre == "":
+            #establecer nombre
+            nombre = conexion.recv(1024)
+            listaConex.append((conexion, nombre[:-1]))
+            
+            print "nombre ",nombre
+            
+
+
         else:
-            break
-        '''    
-        else:
-            t2 = threading.Thread(target=enviar, args=(conexion, data, listaConex))
+            #recibir mensaje
+            data = conexion.recv(1024)
+            print data
+            t2 = threading.Thread(target=enviar, args=(conexion, nombre, data))
             t2.start()
-        '''
+            if data == "bye\n":
+                print "entro a bye"
+                conexion.close()
+                listaConex.remove(conexion)
+                print listaConex
+                break
+            
+          
+        
+           
+        
     
-def enviar(conexion, data, listaConex):
-       
+def enviar(conexion, nombre, data):
+          
     for x in listaConex:
-        if x == conexion:
+        print "lista", x
+        print "nombreLista",x[1]
+        if x[0] == conexion:
             pass
         else:    
-            x.sendall(data)
+            x[0].sendall(nombre[:-1]+":"+data)
+            
 
         
         
