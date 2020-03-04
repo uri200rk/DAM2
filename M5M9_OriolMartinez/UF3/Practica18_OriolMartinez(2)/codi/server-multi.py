@@ -18,15 +18,17 @@ def broadcast_usr(uname, cli_sock,):
 
     while True:
         try:
-            size = cli_sock.recv(4096)
             data = cli_sock.recv(4096)
+            
             if data:
                 print "{0} spoke {1}".format(uname, data)
-                if data == "/image\n":
+                print data
+                if "/image" in data:
                     print "entro en recibir imagen [server]"
-                    recvImage(cli_sock,size,data)
-                    
-                b_usr(cli_sock, uname, data)
+                    print "size[server]" + data
+                    recvImage(cli_sock,data)
+                else:
+                    b_usr(cli_sock, uname, data)
                 
                 if data[:-1] == "Bye":
                     CONNECTION_LIST.remove((uname, cli_sock))

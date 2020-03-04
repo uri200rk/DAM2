@@ -4,11 +4,11 @@ import urllib
 import re
 import pygame
 import time
-from base64 import b64encode
+from base64 import *
 #import win32gui
 
 HOST = 'localhost'
-PORT = 5021
+PORT = 5050
 
 
 def getmixerargs():
@@ -131,23 +131,31 @@ def sendImage(s, path):
     bytes = data.encode('base64')
     size = len(bytes)
     print size
-    time.sleep(2.4)
+    time.sleep(1)
 
 
     ######send image size to server########
-    print "enviando imagen"
-    s.sendall("/image"+str(size))
-    s.sendall("/image"+bytes)
+    print "enviando imagen", "/image "+str(size)
+    s.sendall("/image "+str(size))
+    time.sleep(1)
+    s.sendall("/image "+bytes)
     
     #print bytes
     myfile.close()
 
 def recvImage(s, size): # jgfkj:/image 78687
     print 'recibiendo imagen...'
-    data = s.recv(4096)
+    data = s.recv(4096000)
     print "size" + size
     print " data" + data
     img = open('/home/oriol/GitHub/DAM2/M5M9_OriolMartinez/UF3/Practica18_OriolMartinez(2)/codi/imgRecibidas/new.png','wb')
-    c_data = data.decode('base64')
-    img.write(c_data)
+    data2=data.split("/image")[-1]
+    
+    img.write(data2.decode('base64'))
+    
+    print size, len(data2)
+    #print len(c_data)
+   # print c_data
+    #img.write(data2)
+    img.close()
 

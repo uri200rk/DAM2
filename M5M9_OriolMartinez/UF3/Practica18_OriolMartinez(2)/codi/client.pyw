@@ -4,7 +4,7 @@ from ChatFns import *
 
 #variables
 
-image = "/home/oriol/GitHub/DAM2/M5M9_OriolMartinez/UF3/Practica18_OriolMartinez/python_chat-master/enviarImg/person.png"
+image = "/home/oriol/GitHub/DAM2/M5M9_OriolMartinez/UF3/Practica18_OriolMartinez/python_chat-master/enviarImg/"
 
 
 
@@ -35,15 +35,21 @@ def ClickAction():
     EntryBox.delete("0.0",END)
 
     #Send my mesage to all others
-    s.sendall(EntryText)
+
    
     #Send image
 
-    if EntryText == "/image\n":
-        sendImage(s, image)
+    if "/image" in EntryText:
+        nombreImagen = EntryText.split("/image")[-1]
+        print "entro en enviar imagen [client]"
+        sendImage(s, image+nombreImagen)
+    else:
+        s.sendall(EntryText)
         
-    elif EntryText == "bye\n":   #Exit the program
+    if EntryText == "bye\n":   #Exit the program
         base.destroy()
+
+    
 
 
 #---------------------------------------------------#
