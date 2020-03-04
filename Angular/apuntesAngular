@@ -1,0 +1,15 @@
+                                                        ANGULAR
+#create a new project
+ng new [nom]
+
+#create new component
+ng g c components/[nombre]
+
+#Compilar y abrir ventana
+ng serve -o
+
+#download and install boostrap, jquery, pooper:
+
+npm install boostrap --save
+npm install jquery --save
+npm install pooper.js --save
