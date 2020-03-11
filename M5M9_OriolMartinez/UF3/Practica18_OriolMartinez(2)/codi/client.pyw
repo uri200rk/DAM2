@@ -4,7 +4,7 @@ from ChatFns import *
 
 #variables
 
-image = "/home/oriol/GitHub/DAM2/M5M9_OriolMartinez/UF3/Practica18_OriolMartinez/python_chat-master/enviarImg/person.png"
+#image = "/home/oriol/GitHub/DAM2/M5M9_OriolMartinez/UF3/Practica18_OriolMartinez/python_chat-master/enviarImg/person.png"
 
 
 
@@ -40,6 +40,8 @@ def ClickAction():
     #Send image
 
     if "/image" in EntryText:
+        image = EntryText.split("/image ")[:-1]
+       
         print "entro en enviar imagen [client]"
         sendImage(s, image)
     else:
