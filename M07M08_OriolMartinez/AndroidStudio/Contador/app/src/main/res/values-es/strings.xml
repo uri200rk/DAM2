@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Contador</string>
+    <string name="suma">suma</string>
+    <string name="resta">resta</string>
+    <string name="aumentar">aumentar</string>
+    <string name="esconder">esconder</string>
+    <string name="disminuir">disminuir</string>
+    <string name="mostrar">mostrar</string>
+    <string name="colorTexto">color texto</string>
+    <string name="colorFondo">color fondo</string>
+</resources>

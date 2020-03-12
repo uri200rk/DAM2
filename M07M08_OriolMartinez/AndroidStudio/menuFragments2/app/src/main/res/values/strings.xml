@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">menuIfragments</string>
+    <string name="imagen">imagen</string>
+    <string name="llista">llista</string>
+    <string name="borrar">borrar1</string>
+    <string name="borrar2">borrar2</string>
+    <string name="menu">menu</string>
+</resources>
