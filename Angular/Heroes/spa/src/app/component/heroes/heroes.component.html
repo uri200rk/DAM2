@@ -3,77 +3,22 @@
 
 <div class="card-columns">
 
-  <div class="card">
-      <img class="card-img-top img-fluid" src="assets/img/spiderman.png" alt="Card image cap">
+  <div class="card" *ngFor="let heroe of heroes; let i = index">
+      <img class="card-img-top img-fluid" [src]="heroe.img" [alt]="heroe.nombre">
       <div class="card-block">
-        <h5 class="card-title">Spider-man</h5>
-        <p class="card-text">The best superheroe</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <h5 class="card-title">{{heroe.nombre}}</h5>
+        <p class="card-text">{{heroe.bio}}</p>
+        <p class="card-text"><small class="text-muted">{{heroe.aparicion}}</small></p>
 
-        <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
+
+       <button (click)="verHeroe(i)"type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
+      <!--<a [routerLink]="['/heroe',i]" class="btn btn-outline-primary">Ver más link..</a>-->
+
 
       </div>
     </div>
 
-    <div class="card">
-        <img class="card-img-top img-fluid" src="assets/img/aquaman.png" alt="Card image cap">
-        <div class="card-block">
-          <h5 class="card-title">aquaman</h5>
-          <p class="card-text">superheroe 2</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 
-          <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
-
-        </div>
-      </div>
-
-      <div class="card">
-          <img class="card-img-top img-fluid" src="assets/img/batman.png" alt="Card image cap">
-          <div class="card-block">
-            <h5 class="card-title">Batman</h5>
-            <p class="card-text">superheroe 3</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-            <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
-
-          </div>
-        </div>
-
-        <div class="card">
-            <img class="card-img-top img-fluid" src="assets/img/linterna-verde.png" alt="Card image cap">
-            <div class="card-block">
-              <h5 class="card-title">linterna-verde</h5>
-              <p class="card-text">superheroe 4</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-              <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
-
-            </div>
-          </div>
-
-          <div class="card">
-              <img class="card-img-top img-fluid" src="assets/img/wolverine.png" alt="Card image cap">
-              <div class="card-block">
-                <h5 class="card-title">wolverine</h5>
-                <p class="card-text">superheroe 5</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-                <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
-
-              </div>
-            </div>
-
-            <div class="card">
-                <img class="card-img-top img-fluid" src="assets/img/hulk.png" alt="Card image cap">
-                <div class="card-block">
-                  <h5 class="card-title">Spider-man</h5>
-                  <p class="card-text">superheroe 6</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-                  <button type="button" class="btn btn-outline-primary btn-block"> Ver más...</button>
-                  
-                </div>
-              </div>
 
 
 
