@@ -5,8 +5,7 @@
         android:fromXDelta="0%"
         android:toXDelta="0%"
         android:fromYDelta="-100%"
-        android:toYDelta="0%"
-        android:repeatMode="reverse"
-        android:repeatCount="2"/>
+        android:toYDelta="300%"
+        />
 
 </set>
