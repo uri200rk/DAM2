@@ -6,17 +6,17 @@ public class Gym {
 	
 	//Atributs
 	
-	String cif, adreça;
+	String cif, adreca;
 	int cp;
 	
 	
 	
 	//contructor
 
-		public Gym(String cif, String adreça, int cp) {
+		public Gym(String cif, String adreca, int cp) {
 			
 			this.cif = cif;
-			this.adreça = adreça;
+			this.adreca = adreca;
 			this.cp = cp;
 			
 		}
@@ -36,14 +36,14 @@ public class Gym {
 
 
 
-		public String getAdreça() {
-			return adreça;
+		public String getAdreca() {
+			return adreca;
 		}
 
 
 
-		public void setAdreça(String adreça) {
-			this.adreça = adreça;
+		public void setAdreca(String adreca) {
+			this.adreca = adreca;
 		}
 
 
@@ -76,7 +76,7 @@ public class Gym {
 
 		@Override
 		public String toString() {
-			return "Gym [cif=" + cif + ", adreça=" + adreça + ", cp=" + cp + "]";
+			return "Gym [cif=" + cif + ", adreça=" + adreca + ", cp=" + cp + "]";
 		}
 	
 
