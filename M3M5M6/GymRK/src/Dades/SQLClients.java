@@ -1,38 +1,36 @@
 package Dades;
 
-
 import java.sql.Connection;
 
 import java.sql.DriverManager;
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
-
-import java.sql.Statement;
 import java.util.ArrayList;
-
 import Clases.Client;
-
 
 public class SQLClients {
 
-	Connection c = null;
+	Connection c;
 
-	Statement sentencia = null;
+	PreparedStatement st = null;
+
+	ResultSet rs = null;
 
 	String nombreTabla;
 
-	String cif, Nombre, Apellidos, adreca, nBancari, tlf, codiPostal;
+	String dni, nombre, apellidos, mail, iban;
 	
-	String url;
+	int tlf;
 	
+	Boolean statPagament, admin;
 
+	String url;
 
 	public Connection conectar() {
 
-		url = "D:\\Programas\\BD\\gym";
-		
+		url = "D:\\Programas\\BD\\gymRK\\gymRK_BD.db";
+
 		try {
 
 			Class.forName("org.sqlite.JDBC");
@@ -51,67 +49,55 @@ public class SQLClients {
 
 	}
 
-/*
-	public void insertaClients(Client client) throws SQLException {
+	public void close() {
+		try {
+			c.close();
+		} catch (SQLException ex) {
+			System.out.println(ex);
+		}
+	}
 
+	public void insertaClients(Client Client) {
 
-		String sqlInsert = "INSERT INTO Clients (cif, nom, cognom, adreça, codiPostal, tlf, nBancari) "
+		String sqlInsert = "INSERT INTO Client (DNI, Nom, Cognom, Mail, IBAN, Tlf, StatPagament, Admin) "
 
-		            	+ "VALUES ("+"\""+client.getCif()+"\""+","
-		            	+"\""+client.getNom()+"\""+","
-		            	+"\""+client.getCognom()+"\""+"," 
-		            	+"\""+client.getAdreça()+"\""+"," 
-		            	+"\""+client.getCodiPostal()+"\""+"," 
-		            	+"\""+client.getTlf()+"\""+"," 
-		            	+"\""+client.getnBancari()+"\""+");";
-
-		
+				+ "VALUES (" + "\"" + Client.getDni() + "\"" + "," + "\"" + Client.getNom() + "\"" + "," + "\""
+				+ Client.getCognom() + "\"" + "," + "\"" + Client.getMail() + "\"" + "," + "\"" + Client.getIban()
+				+ "\"" + "," + "\"" + Client.getTlf() + "\"" + "," + "\"" + Client.getStatPagament() + "\"" + "," + "\""
+				+ Client.getAdmin() + "\"" + ");";
 
 		try {
 
-			conectar();
+			st = c.prepareStatement(sqlInsert);
 
-			sentencia = c.createStatement();
+			st.execute();
 
-			sentencia.executeUpdate(sqlInsert);
-
-			sentencia.close();
-
+			st.close();
 			c.close();
 
-			System.out.println("Datos insertados");
+			System.out.println("Datos insertados correctamente");
 
-		} catch (Exception e) {
-
-			System.out.println("Error al insertar datos en la tabla");
-
+		} catch (SQLException ex) {
+			System.err.println(ex.getMessage());
+			System.out.println("Error al insertar los datos");
 		}
 
 	}
-	
-	
+
 	public void updateClients(Client client) throws SQLException {
 
-
-		String sqlInsert = "UPDATE Clients SET"+" nom=\""+client.getNom()+
-												"\",cognom =\""+client.getCognom()+
-												"\",adreça = \""+client.getAdreça()+
-												"\",codiPostal =\""+client.getCodiPostal()+
-												"\",tlf =\""+client.getTlf()+
-												"\",nBancari =\""+client.getnBancari()+
-												"\""+" WHERE cif ="+"\""+client.getCif()+"\"";
+		String sqlUpdate = "UPDATE Client SET" + " DNI=\"" + client.getDni() + "\",Nom =\"" + client.getNom()
+				+ "\",Cognom = \"" + client.getCognom() + "\",Mail =\"" + client.getMail() + "\",IBAN =\""
+				+ client.getIban() + "\",Tlf =\"" + client.getTlf() + "\",StatPagament =\"" + client.getStatPagament()
+				+ "\",Admin =\"" + client.getAdmin() + "\"" + " WHERE DNI =" + "\"" + client.getDni() + "\"";
 
 		try {
 
-			conectar();
+			st = c.prepareStatement(sqlUpdate);
 
-			sentencia = c.createStatement();
+			st.execute();
 
-			sentencia.executeUpdate(sqlInsert);
-			System.out.println(sqlInsert);
-
-			sentencia.close();
-
+			st.close();
 			c.close();
 
 			System.out.println("Datos modificados");
@@ -123,23 +109,18 @@ public class SQLClients {
 		}
 
 	}
-	
+
 	public void deleteClients(Client client) throws SQLException {
 
-
-		String sqlInsert = "DELETE FROM clients WHERE cif ="+"\""+client.getCif()+"\"";
-		
+		String slqDelete = "DELETE FROM Client WHERE DNI =" + "\"" + client.getDni() + "\"";
 
 		try {
 
-			conectar();
+			st = c.prepareStatement(slqDelete);
 
-			sentencia = c.createStatement();
+			st.execute();
 
-			sentencia.executeUpdate(sqlInsert);
-
-			sentencia.close();
-
+			st.close();
 			c.close();
 
 			System.out.println("Datos borrados");
@@ -151,51 +132,42 @@ public class SQLClients {
 		}
 
 	}
-	
 
-
-	public ArrayList<Client> consultaClients(String nombreTabla) throws SQLException {
-
-		//conectar();
-		
+	public ArrayList<Client> consultaClients(String taula) {
 		
 		ArrayList<Client> arrayClients = new ArrayList<Client>();
 
-		sentencia = c.createStatement();
-
-		String consultaSql = "SELECT * FROM " + nombreTabla + ";";
 
 		try {
+			st = c.prepareStatement("select * from " + taula);
+			rs = st.executeQuery();
 
-			ResultSet rs = sentencia.executeQuery(consultaSql);
-			
-			System.out.println("Visualització dels clients: \n");
-			
-			
-			
 			while (rs.next()) {
 
-				cif = rs.getString("cif");
+				dni = rs.getString("DNI");
 
-			    Nombre = rs.getString("nom");
+				nombre = rs.getString("Nom");
 
-				Apellidos = rs.getString("cognom");
+				apellidos = rs.getString("Cognom");
 
-				adreça = rs.getString("adreça");
+				mail = rs.getString("Mail");
+
+				iban = rs.getString("IBAN");
+
+				tlf = rs.getInt("Tlf");
+
+				statPagament = rs.getBoolean("StatPagament");
+
+				admin = rs.getBoolean("Admin");
+
+				System.out.println("[ Dni : \"" + dni + "\"\n  Nombre : \"" + nombre + "\" \n  Apellidos : \""
+						+ apellidos + "\"\n  Mail: \"" + mail + "\"\n  IBAN: \"" + iban + "\"\n  Tlf: \"" + tlf
+						+ "\"\n  StatPagament: \"" + statPagament + "\"\n  TipoUsuario: \"" + admin + "\"]\n");
 				
-				codiPostal = rs.getString("codiPostal");
+				//a�adimos cliente a la array
 				
-				tlf = rs.getString("tlf");
-				
-				nBancari = rs.getString("nBancari");
-				
-				
-				System.out.println("[ Nombre : \"" + Nombre + "\" \n  Apellidos : \"" + Apellidos + "\"\n  Adreça: \""+ adreça +"\"\n  Codi postal: \""+ codiPostal + "\"\n  Tlf: \"" + tlf + "\"\n  nBancari: \"" + nBancari + "\"]\n");
-				
-				//guardamos clientes en la arrayList
-				
-				arrayClients.add(new Client(cif, Nombre, Apellidos, adreça, codiPostal, tlf, nBancari));
-				
+				arrayClients.add(new Client(dni, nombre, apellidos, mail, iban, tlf, statPagament, admin));
+
 			}
 			
 			//mostramos clientes array
@@ -205,21 +177,14 @@ public class SQLClients {
 				System.out.println(arrayClients.get(i));
 			}
 
+
 			rs.close();
 
-			sentencia.close();
-
-			c.close();
-
-		} catch (Exception e) {
-
-			System.out.println("Fallo al recuperar datos");
-
+		} catch (SQLException ex) {
+			System.err.println(ex.getMessage());
 		}
+		
 		return arrayClients;
-*/
 	}
-	
-	
-	
 
+}

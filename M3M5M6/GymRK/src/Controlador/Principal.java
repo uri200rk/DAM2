@@ -2,9 +2,8 @@ package Controlador;
 
 import java.sql.SQLException;
 
+import Clases.Client;
 import Dades.SQLClients;
-
-
 
 public class Principal {
 
@@ -12,12 +11,14 @@ public class Principal {
 
 		SQLClients conector = new SQLClients();
 		conector.conectar();
-		//conector.consultaClients("Clients");
-		//conector.insertaClients(new Client("26252123","Mariona","Calabró","tierra 32","57584","478569852","214523652152"));
-		//conector.updateClients(new Client("54853215Y", "nom", "prueba","barceloneta","43433","526735230","43956230572396"));
-		//conector.deleteClients("262521tt");
-	
+		conector.consultaClients("Client");
+		//conector.insertaClients(new Client("6535256137G","pedro","apellido","prueba2@gmail.com","12226412364122",856321524,false,true));
+		// conector.updateClients(new
+		// Client("235256137G","maria2","apellido2","prueba3@gmail.com","54646414165454",548565215,false,
+		// true));
+		// conector.deleteClients(new Client("235256137G"));
 
+		conector.close();
 
 	}
 

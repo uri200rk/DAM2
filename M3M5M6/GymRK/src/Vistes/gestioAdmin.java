@@ -1,6 +1,5 @@
 package Vistes;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,27 +7,63 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
+
+import Clases.Client;
+import Dades.SQLClients;
+import VISTA.SQLException;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class gestioAdmin extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
+	private static JTable table;
+	private static JTextField textField;
+	private static JTextField textField_1;
+	private static JTextField textField_2;
+	private static JTextField textField_3;
+	private static JTextField textField_4;
+	private static JTextField textField_5;
+	private static JTextField textField_6;
+	
+	//conexion
+	
+	SQLClients c = new SQLClients();
+
+	
+	
+	//variables
+	
+	static String dni;
+	static String nom;
+	static String cognom;
+	static String mail;
+	static String iban;
+	static int tlf;
+	static Boolean statPagament, admin;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Launch the application.
@@ -39,6 +74,7 @@ public class gestioAdmin extends JFrame {
 				try {
 					gestioAdmin frame = new gestioAdmin();
 					frame.setVisible(true);
+					baseDatosTabla();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,12 +118,45 @@ public class gestioAdmin extends JFrame {
 		btnEditarClient.setBounds(0, 83, 257, 79);
 		panel_1.add(btnEditarClient);
 		
+		//boton eliminar cliente
+		
 		JButton btnEliminarClient = new JButton("ELIMINAR CLIENT\n");
 		btnEliminarClient.setForeground(Color.WHITE);
 		btnEliminarClient.setBackground(Color.DARK_GRAY);
 		btnEliminarClient.setFont(new Font("Ubuntu", Font.BOLD, 20));
 		btnEliminarClient.setBounds(0, 165, 257, 79);
 		panel_1.add(btnEliminarClient);
+		
+		btnEliminarClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				try {
+					int dialogButton = 0;
+					int opcionConfirmacion = JOptionPane.showConfirmDialog(null, "Deseas eliminarlo?", "Warning", dialogButton);
+
+					if (opcionConfirmacion == JOptionPane.YES_OPTION) {
+						c.deleteClients(new Client(dni));
+					}
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				}
+				refresh();
+				baseDatosTabla();
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		JButton btnInsertarClient = new JButton("INSERTAR CLIENT");
 		btnInsertarClient.setForeground(Color.WHITE);
@@ -186,4 +255,127 @@ public class gestioAdmin extends JFrame {
 		lblDadesUsuari.setBounds(277, 12, 401, 42);
 		panel.add(lblDadesUsuari);
 	}
+	
+	
+	/*
+	 * METODOS
+	 */
+	
+	@SuppressWarnings("serial")
+	public static void baseDatosTabla() {
+		
+		// DATA BASE
+
+		SQLClients datos = new SQLClients();
+		datos.conectar();
+
+		DefaultTableModel model = new DefaultTableModel() {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		model.addColumn("DNI");
+		model.addColumn("NOM");
+		model.addColumn("COGNOM");
+		model.addColumn("MAIL");
+		model.addColumn("IBAN");
+		model.addColumn("TLF");
+		model.addColumn("STAT_PAGAMENT");
+		model.addColumn("ADMIN");
+
+		table.setModel(model);
+		model.setRowCount(0);
+
+		for (Client client : datos.consultaClients("Client")) {
+
+			model.addRow(new Object[] { client.getDni(), client.getNom(), client.getCognom(), client.getMail(),
+					client.getIban(), client.getTlf(), client.getStatPagament(), client.getAdmin() });
+		}
+		
+		
+		// click registro
+		
+		
+		table.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Click!");
+				if (e.getClickCount() == 1) {
+
+					final JTable jtable = (JTable) e.getSource();
+					final int row = jtable.getSelectedRow();
+
+					// obtenemos los valores selecionados i los guardamos en la variable
+					dni = (String) jtable.getValueAt(row, 0);
+					nom = (String) jtable.getValueAt(row, 1);
+					cognom = (String) jtable.getValueAt(row, 2);
+					mail = (String) jtable.getValueAt(row, 3);
+					iban = (String) jtable.getValueAt(row, 4);
+					tlf = (int) jtable.getValueAt(row, 5);
+					statPagament = (Boolean) jtable.getValueAt(row, 6);
+					admin = (Boolean) jtable.getValueAt(row, 7);
+
+
+					// poner valores en recuadros blancos
+					textField.setText(dni);
+					textField_1.setText(nom);
+					textField_2.setText(cognom);
+					textField_3.setText(mail);
+					textField_4.setText(iban);
+					textField_5.setText(Integer.toString(tlf));
+					textField_6.setText(Boolean.toString(statPagament));
+					textField_6.setText(Boolean.toString(admin));
+
+					String cifU = textField.getText().toString();
+					String nomU = textField_1.getText().toString();
+					String cognomU = textField_2.getText().toString();
+					System.out.println("cif:" + cifU + nomU + cognomU);
+					
+
+					textField.setEnabled(false);
+					textField_1.setEnabled(false);
+					textField_2.setEnabled(false);
+					textField_3.setEnabled(false);
+					textField_4.setEnabled(false);
+					textField_5.setEnabled(false);
+					textField_6.setEnabled(false);
+
+				} else {
+					System.out.println("Marca primer un registre");
+				}
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
