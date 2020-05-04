@@ -137,17 +137,5 @@ public class SQLFitxades {
 
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

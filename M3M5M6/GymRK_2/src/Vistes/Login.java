@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.Client;
+import Dades.SQLClients;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -22,12 +26,17 @@ public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUser;
-	private JPasswordField passwordField;
 	private JFrame frame;
+
+	
+	//objetos
+	SQLClients client = new SQLClients();
+	static Client registro;
 
 	
 	//variables
 	static String dni;
+	static String rol;
 
 
 	/**
@@ -62,7 +71,7 @@ public class Login extends JFrame {
 		txtUser = new JTextField();
 		txtUser.setToolTipText("");
 		txtUser.setHorizontalAlignment(SwingConstants.LEFT);
-		txtUser.setBounds(141, 194, 187, 35);
+		txtUser.setBounds(131, 235, 187, 35);
 		contentPane.add(txtUser);
 		txtUser.setColumns(10);
 		
@@ -96,9 +105,32 @@ public class Login extends JFrame {
 				
 					dni = txtUser.getText().toString(); //cojer valor texto dni
 					getDNI();	//Guardar dni
+					System.out.println(getDNI());
 					
+					client.conectar();
+					registro = client.consultaClientDNI("Client", getDNI());
+					client.close();
+					
+					System.out.println( "Rol cliente: " +registro.getAdmin().toString());
+					
+					//abrir ventana correspondiente
 			       	gestioUser frame = new gestioUser();
-			       	frame.show();	//visualització nova finestra 	finestra
+			       	
+				    gestioAdmin frame2 = new gestioAdmin();
+				    
+				    System.out.println("\""+registro.getAdmin()+ "\"");
+					if (registro.getAdmin().contentEquals("client")) {
+						
+						
+				       	frame.show();	//visualització nova finestra 	finestra
+				       	
+					}else if(registro.getAdmin().contentEquals("administrador")) {
+						
+				       	frame2.show();	//visualització nova finestra 	finestra
+
+					}
+					
+
 			       	dispose();		//tancament finestra login
 			       
 				
@@ -117,18 +149,8 @@ public class Login extends JFrame {
 		JLabel lblUser = new JLabel("DNI");
 		lblUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUser.setFont(new Font("Symbola", Font.BOLD, 15));
-		lblUser.setBounds(41, 200, 43, 25);
+		lblUser.setBounds(62, 239, 43, 25);
 		contentPane.add(lblUser);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPassword.setFont(new Font("Symbola", Font.BOLD, 15));
-		lblPassword.setBounds(41, 271, 88, 25);
-		contentPane.add(lblPassword);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(141, 265, 187, 35);
-		contentPane.add(passwordField);
 		
 	}
 	
@@ -145,6 +167,10 @@ public class Login extends JFrame {
 		
 	}
 	
+	public String getRol() {
+		
+		return rol;
+	}
 	
 	
 	

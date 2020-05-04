@@ -69,6 +69,7 @@ public class gestioAdmin extends JFrame {
 	static JButton btnGuardar;
 	private static JTable table;
 
+	DefaultTableModel model = new DefaultTableModel();
 
 	
 
@@ -95,6 +96,18 @@ public class gestioAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public gestioAdmin() {
+		
+		model.addColumn("DNI");
+		model.addColumn("NOM");
+		model.addColumn("COGNOM");
+		model.addColumn("MAIL");
+		model.addColumn("IBAN");
+		model.addColumn("TLF");
+		model.addColumn("STAT_PAGAMENT");
+		model.addColumn("T.USUARIO");
+		model.addColumn("CIF_GYM");
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 994, 668);
 		contentPane = new JPanel();
@@ -119,7 +132,7 @@ public class gestioAdmin extends JFrame {
 		
 		
 		//---------------------------------------------BOTON EDITAR CLIENTE------------------------------------------------------
-		
+
 		btnEditarClient = new JButton("EDITAR CLIENT");
 		btnEditarClient.setForeground(Color.WHITE);
 		btnEditarClient.setBackground(Color.DARK_GRAY);
@@ -181,7 +194,6 @@ public class gestioAdmin extends JFrame {
 					int opcionConfirmacion = JOptionPane.showConfirmDialog(null, "Deseas eliminarlo?", "Warning", dialogButton);
 
 					if (opcionConfirmacion == JOptionPane.YES_OPTION) {
-						System.out.println("dni-------------------"+dni);
 						c.deleteClients(new Client(dni));
 					}
 
@@ -291,12 +303,36 @@ public class gestioAdmin extends JFrame {
 		
 		//---------------------------------------------------------BOTON BUSCAR---------------------------------------------------
 		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-			}
-		});
+
+            public void actionPerformed(ActionEvent e) {
+            	
+        		
+
+        		
+                //---Actualiza valores que se muestran en la tabla
+                SQLClients datos = new SQLClients();
+                datos.conectar();
+                
+                try {
+                	
+
+
+
+            		table.setModel(model);
+            		model.setRowCount(0);
+            		
+            		//----RELLENA TABLA
+            		for (Client client : datos.BuscarBuscador(new Client(textField_7.getText().toString()))) {
+
+            			model.addRow(new Object[] { client.getDni(), client.getNom(), client.getCognom(), client.getMail(),
+            					client.getIban(), client.getTlf(), client.getStatPagament(), client.getAdmin(), client.getCifGym() });
+            			System.out.println("dni:" + client.getDni());
+            		}
+
+                        } catch (Exception e1) {
+                        }
+                    }
+                });
 		
 
 		
@@ -467,18 +503,23 @@ public class gestioAdmin extends JFrame {
 			
 		});
 		
-		
-		
-		
-		
-		
+
 		//----------------------------------------------------------------------------------------------------------------------
+		
+		
+		//llamada de metodos al iniciar ventana
+		
+		baseDatosTabla();
+		refresh();
+		
 	}
 	
 	
 	/*
 	 * METODOS
 	 */
+	
+	
 	
 	//metode per tornar les preferencies de botons i camps de text com l'inici
 	public static void refresh() {

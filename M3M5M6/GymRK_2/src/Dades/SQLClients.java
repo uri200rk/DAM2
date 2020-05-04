@@ -26,6 +26,8 @@ public class SQLClients {
 	int tlf;
 
 	String url;
+	
+	ArrayList<Client> arrayClients = new ArrayList<Client>();
 
 	public Connection conectar() {
 
@@ -148,7 +150,7 @@ public class SQLClients {
 
 	public ArrayList<Client> consultaClients(String taula) {
 
-		ArrayList<Client> arrayClients = new ArrayList<Client>();
+		
 
 		try {
 			st = c.prepareStatement("select * from " + taula);
@@ -243,6 +245,55 @@ public class SQLClients {
 		return new Client(dni, nombre, apellidos, mail, iban, tlf, statPagament, tUsuari, cifGym);
 
 	}
+	
+	
+	public ArrayList<Client> BuscarBuscador(Client client) throws SQLException {
+        conectar();
+
+        String consultaSql = "SELECT * FROM Client WHERE DNI LIKE '%" + client.getDni() + "%';";
+		st = c.prepareStatement(consultaSql);
+
+        try {
+
+			rs = st.executeQuery();
+
+
+            while (rs.next()) {
+
+				dni = rs.getString("DNI");
+
+				nombre = rs.getString("Nom");
+
+				apellidos = rs.getString("Cognom");
+
+				mail = rs.getString("Mail");
+
+				iban = rs.getString("IBAN");
+
+				tlf = rs.getInt("Tlf");
+
+				statPagament = rs.getString("StatPagament");
+
+				tUsuari = rs.getString("Admin");
+				
+				cifGym = rs.getString("CifGym");
+				
+                //GUARDA EN ARRAY LIST CLIENT
+				arrayClients.add(new Client(dni, nombre, apellidos, mail, iban, tlf, statPagament, tUsuari, cifGym));
+
+            }
+
+            rs.close();
+            st.close();
+            c.close();
+
+        } catch (Exception e) {
+            System.out.println("fALLO AL BUSCAR ");
+
+        }
+        return arrayClients;
+    }
+    
 	
 
 

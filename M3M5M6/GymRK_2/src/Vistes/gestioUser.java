@@ -70,7 +70,6 @@ public class gestioUser extends JFrame {
 					gestioUser frame = new gestioUser();
 					frame.setVisible(true);
 
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -341,42 +340,6 @@ public class gestioUser extends JFrame {
 
 		}
 		
-
-
-		// click registro
-
-		/*
-		 * table.addMouseListener(new MouseAdapter() {
-		 * 
-		 * public void mouseClicked(MouseEvent e) { System.out.println("Click!"); if
-		 * (e.getClickCount() == 1) {
-		 * 
-		 * final JTable jtable = (JTable) e.getSource(); final int row =
-		 * jtable.getSelectedRow();
-		 * 
-		 * // obtenemos los valores selecionados i los guardamos en la variable dni =
-		 * (String) jtable.getValueAt(row, 0); nom = (String) jtable.getValueAt(row, 1);
-		 * cognom = (String) jtable.getValueAt(row, 2); mail = (String)
-		 * jtable.getValueAt(row, 3); iban = (String) jtable.getValueAt(row, 4); tlf =
-		 * (int) jtable.getValueAt(row, 5); statPagament = (Boolean)
-		 * jtable.getValueAt(row, 6); admin = (Boolean) jtable.getValueAt(row, 7);
-		 * 
-		 * 
-		 * // poner valores en recuadros blancos textField.setText(dni);
-		 * textField_1.setText(nom); textField_2.setText(cognom);
-		 * textField_3.setText(mail); textField_4.setText(iban);
-		 * textField_5.setText(Integer.toString(tlf));
-		 * textField_6.setText(Boolean.toString(statPagament));
-		 * 
-		 * 
-		 * 
-		 * textField.setEnabled(false); textField_1.setEnabled(false);
-		 * textField_2.setEnabled(false); textField_3.setEnabled(false);
-		 * textField_4.setEnabled(false); textField_5.setEnabled(false);
-		 * textField_6.setEnabled(false);
-		 * 
-		 * } else { System.out.println("Marca primer un registre"); } } });
-		 */
 
 	}
 
